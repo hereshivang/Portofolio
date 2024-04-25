@@ -78,7 +78,7 @@ const Landing = () => {
       {/* Profile Section */}
       <section id="profile">
         <div className="section__pic-container">
-          <img src="src\assets\pp.jpg" alt="My Profile Picture" />
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D" alt="My Profile Picture" />
         </div>
         <div className="section__text">
           <p className="section__text__p1">Hello, I'm</p>
