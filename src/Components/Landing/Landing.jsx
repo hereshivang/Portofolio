@@ -180,10 +180,7 @@ const Landing = () => {
         <div className="experience-details-container">
           <div className="about-containers">
             <div className="details-container color-container">
-              <div className="article-container">
-                <img src="./assets/project-1.png" alt="Project 1" className="project-img" />
-              </div>
-              <h2 className="experience-sub-title project-title">Project One</h2>
+              <h2 className="experience-sub-title project-title">AI Integrated Expense Tracker</h2>
               <div className="btn-container">
                 <button
                   className="btn btn-color-2 project-btn"
@@ -201,10 +198,7 @@ const Landing = () => {
             </div>
             
             <div className="details-container color-container">
-              <div className="article-container">
-                <img src="./assets/project-1.png" alt="Project 1" className="project-img" />
-              </div>
-              <h2 className="experience-sub-title project-title">Project One</h2>
+              <h2 className="experience-sub-title project-title">Retweets</h2>
               <div className="btn-container">
                 <button
                   className="btn btn-color-2 project-btn"
