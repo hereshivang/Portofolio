@@ -78,7 +78,7 @@ const Landing = () => {
       {/* Profile Section */}
       <section id="profile">
         <div className="section__pic-container">
-          <img src="https://drive.google.com/file/d/1CWv0u1TM-5YhdxfuLjzeYDzEdaUoqncr/view?usp=drive_link" alt="My Profile Picture" />
+          <img src="src\assets\pp.jpg" alt="My Profile Picture" />
         </div>
         <div className="section__text">
           <p className="section__text__p1">Hello, I'm</p>
