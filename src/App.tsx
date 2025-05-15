@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Terminal, Command, X, User, Code, Briefcase, FileText, Mail, Linkedin, Github, ExternalLink, Download } from 'lucide-react';
+import { Terminal, Command, X, User, Code, Briefcase, Mail, Linkedin, Github, ExternalLink, Download } from 'lucide-react';
 
 // Main App Component
 export default function App() {
   const [activeSection, setActiveSection] = useState('about');
   const [isLoading, setIsLoading] = useState(true);
   const [bootSequence, setBootSequence] = useState(0);
+  const [readyToEnter, setReadyToEnter] = useState(false);
   
   // Simulating boot sequence
   useEffect(() => {
@@ -13,7 +14,7 @@ export default function App() {
       setBootSequence(prev => {
         if (prev >= 100) {
           clearInterval(bootTimer);
-          setTimeout(() => setIsLoading(false), 500);
+          setTimeout(() => setReadyToEnter(true), 500);
           return 100;
         }
         return prev + Math.floor(Math.random() * 15) + 5;
@@ -23,8 +24,25 @@ export default function App() {
     return () => clearInterval(bootTimer);
   }, []);
   
+  // Add event listener for keypress when ready to enter
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (readyToEnter && event.key === 'Enter') {
+        setIsLoading(false);
+      }
+    };
+    
+    if (readyToEnter) {
+      window.addEventListener('keypress', handleKeyPress);
+    }
+    
+    return () => {
+      window.removeEventListener('keypress', handleKeyPress);
+    };
+  }, [readyToEnter]);
+  
   if (isLoading) {
-    return <BootScreen progress={bootSequence} />;
+    return <BootScreen progress={bootSequence} readyToEnter={readyToEnter} onEnter={() => setIsLoading(false)} />;
   }
   
   return (
@@ -51,22 +69,10 @@ export default function App() {
 }
 
 // Boot Screen Component
-function BootScreen({ progress }) {
+function BootScreen({ progress, readyToEnter, onEnter }) {
   return (
     <div className="font-mono bg-black text-green-500 min-h-screen flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-lg">
-        <pre className="text-xs sm:text-sm mb-8">
-{`
- _____                    _             _   ______      _           
-|_   _|                  (_)           | |  | ___ \\    | |          
-  | | ___ _ __ _ __ ___   _ _ __   __ _| |  | |_/ /__ | |_ ___     
-  | |/ _ \\ '__| '_ \` _ \\ | | '_ \\ / _\` | |  |  __/ _ \\| __/ _ \\    
-  | |  __/ |  | | | | | || | | | | (_| | |  | | | (_) | || (_) |   
-  \\_/\\___|_|  |_| |_| |_|/ |_| |_|\\__,_|_|  \\_|  \\___/ \\__\\___/    
-                       |__/                                        
-`}
-        </pre>
-        
+      <div className="w-full max-w-lg">        
         <div className="mb-4">
           <div className="text-sm">[INIT] Booting system...</div>
           <div className="text-sm">[KERNEL] Loading components...</div>
@@ -87,8 +93,16 @@ function BootScreen({ progress }) {
           {progress < 40 && '>> System check...'}
           {progress >= 40 && progress < 70 && '>> Loading portfolio assets...'}
           {progress >= 70 && progress < 100 && '>> Preparing workspace...'}
-          {progress === 100 && '>> Ready to launch. Initializing...'}
+          {progress === 100 && '>> System ready.'}
         </div>
+        
+        {readyToEnter && (
+          <div className="mt-8 text-center">
+            <div className="inline-block border border-green-500 rounded px-4 py-2 animate-pulse cursor-pointer" onClick={onEnter}>
+              Press ENTER to continue
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
